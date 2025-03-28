@@ -1,16 +1,22 @@
-import { useFonts } from "expo-font";
 import { useEffect, useState } from "react";
+import * as Font from "expo-font";
 import { FONT_FAMILY } from "../resources/app_fonts";
 
 export function useLoadFonts() {
-  const [fontsLoaded] = useFonts(FONT_FAMILY);
-  const [isReady, setIsReady] = useState(false);
+  const [isFontsLoaded, setIsFontsLoaded] = useState(false);
 
   useEffect(() => {
-    if (fontsLoaded) {
-      setIsReady(true);
+    async function loadFonts() {
+      try {
+        await Font.loadAsync(FONT_FAMILY);
+        setIsFontsLoaded(true);
+      } catch (error) {
+        console.error("Erro ao carregar fontes:", error);
+      }
     }
-  }, [fontsLoaded]);
 
-  return isReady;
+    loadFonts();
+  }, []);
+
+  return isFontsLoaded;
 }

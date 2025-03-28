@@ -1,12 +1,16 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View } from "react-native";
 import GlobalInput from "../components/global_input";
 import GlobalButton from "../components/global_button";
 import Typography from "../components/typography";
+import RegisterService from "../services/register_service";
+import { COLORS } from "../styles/color_style";
 
 const RegisterPage = () => {
+  const { navigatoSucess } = RegisterService();
+
   return (
-    <View className="bg-white flex gap-8 pt-8 px-7 w-full h-screen flex-col items-end justify-start">
+    <View style={styles.container}>
       <GlobalInput
         label="Nome da empresa"
         placeholder="Inserir nome da empresa"
@@ -21,23 +25,63 @@ const RegisterPage = () => {
       />
       <GlobalInput label="Senha" placeholder="Inserir senha" />
 
-      <GlobalButton className="w-full rounded-[10px] mt-2">
-        <Typography variant="h2-jakarta-bold" className="text-white my-1 ">
+      <GlobalButton
+        onPress={navigatoSucess}
+        style={{ width: "100%", borderRadius: 10, marginTop: 4 }}
+      >
+        <Typography
+          variant="h2-plusjakartasans-medium"
+          style={{ color: COLORS.backgroundLight }}
+        >
           Continuar
         </Typography>
       </GlobalButton>
-      <View className="w-full flex-row items-center justify-center mt-4 gap-1">
-        <Typography variant="h2-jakarta-medium" className="text-gray-900">
+
+      <View style={styles.footer}>
+        <Typography
+          variant="h3-plusjakartasans-regular"
+          style={styles.footerText}
+        >
           Já tem uma conta?
         </Typography>
-        <Typography variant="h2-jakarta-medium" className="text-primary">
-          Entar
+        <Typography
+          variant="h3-plusjakartasans-medium"
+          style={styles.footerLink}
+        >
+          Entrar
         </Typography>
       </View>
     </View>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "#ffffff",
+    gap: 16,
+    paddingTop: 16,
+    paddingHorizontal: 28,
+    width: "100%",
+    height: "100%",
+    flexDirection: "column",
+    alignItems: "flex-end",
+    justifyContent: "flex-start",
+  },
+
+  footer: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 16,
+    gap: 4,
+  },
+  footerText: {
+    color: "#111827",
+  },
+  footerLink: {
+    color: "#3b82f6",
+  },
+});
 
 export default RegisterPage;

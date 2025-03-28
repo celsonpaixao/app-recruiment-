@@ -1,12 +1,10 @@
-import AppNavigation from "../hooks/app_navigation";
+import useAppNavigation from "../hooks/app_navigation";
 
 const LoginService = () => {
-  const navigator = AppNavigation();
+  const { goPasswordRecovery, goToHome } = useAppNavigation();
   return {
-    navigateToRecoveryPass: () => {
-      console.log("Navegação");
-      navigator.goPasswordRecovery();
-    },
+    navigateToRecoveryPass: () => goPasswordRecovery(),
+    onLogin: () => goToHome(),
   };
 };
 

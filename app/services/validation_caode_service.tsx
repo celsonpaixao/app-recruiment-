@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import useAppValidator from "../hooks/app_validator";
-import useAppNavigation from "../hooks/app_navigation";
 
 type ValidationCodeState = {
   code: string[];
@@ -11,13 +10,12 @@ type ValidationCodeState = {
     focusPrev: () => void
   ) => void;
   validateCode: () => boolean;
-  navigateToResetPass: () => void;
 };
 
 export const useValidationCodeService = create<ValidationCodeState>(
   (set, get) => {
     const { validate } = useAppValidator();
-    const { goResetPassword } = useAppNavigation();
+
     return {
       code: ["", "", "", ""],
 
@@ -33,7 +31,6 @@ export const useValidationCodeService = create<ValidationCodeState>(
           } else if (validate("onlyNumbers", value)) {
             newCode[index] = value;
 
-         
             if (index < 3) {
               focusNext();
             }
@@ -44,8 +41,6 @@ export const useValidationCodeService = create<ValidationCodeState>(
       },
 
       validateCode: () => get().code.join("").length === 4,
-
-      navigateToResetPass: () => {},
     };
   }
 );

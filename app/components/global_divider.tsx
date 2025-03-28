@@ -1,27 +1,37 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, StyleSheet } from "react-native";
 import Typography from "./typography";
-import clsx from "clsx";
+import { COLORS } from "../styles/color_style";
 
-
-const GlobalDivider = ({
-  text,
-  className,
-}: {
+interface GlobalDividerProps {
   text?: string;
   className?: string;
-}) => {
+}
+
+const GlobalDivider = ({ text, className }: GlobalDividerProps) => {
   return (
-    <View className={clsx("flex-row items-center w-full", className)}>
-      <View className="flex-1 h-[1px] bg-gray-300" />
+    <View style={[styles.container, className && {}]}>
+      <View style={styles.line} />
       {text && (
-        <Typography variant="h3-jakarta-medium" className="mx-2 text-gray-500">
-          {text}
-        </Typography>
+        <Typography variant="p-plusjakartasans-medium">{text}</Typography>
       )}
-      <View className="flex-1 h-[1px] bg-gray-300" />
+      <View style={styles.line} />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%",
+    gap: 10,
+  },
+  line: {
+    flex: 1,
+    height: 1,
+    backgroundColor: COLORS.gray[300],
+  },
+});
 
 export default GlobalDivider;

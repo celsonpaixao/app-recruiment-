@@ -7,25 +7,66 @@ import {
   View,
 } from "react-native";
 import GlobalBackButton from "../components/global_back_button";
+import { COLORS } from "../styles/color_style";
 
 const AuthLayoutPage = ({ children }: { children?: React.ReactNode }) => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <View className="bg-primary w-full h-screen flex-1">
-        <View className="w-full h-[70px] mt-[40px] flex-row bg-primary">
-          <View className="w-[50%] h-[70px] flex items-start justify-center pl-8 bg-primary rounded-br-[20px]">
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <View style={styles.leftHeader}>
             <GlobalBackButton label="Voltar" />
           </View>
-          <View className="w-[50%] h-[70px] bg-white rounded-t-[30px]">
+          <View style={styles.rightHeader}>
             <GlobalBackButton label="Voltar" />
           </View>
         </View>
-        <View className="bg-white w-full h-screen flex-1 rounded-tl-[30px] overflow-hidden">
-          {children}
-        </View>
+        <View style={styles.content}>{children}</View>
       </View>
     </TouchableWithoutFeedback>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: COLORS.primary,
+    width: "100%",
+    height: "100%",
+    flex: 1,
+  },
+  header: {
+    width: "100%",
+    height: 70,
+    marginTop: 40,
+    flexDirection: "row",
+    backgroundColor: COLORS.primary,
+  },
+  leftHeader: {
+    width: "50%",
+    height: 70,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    paddingLeft: 32,
+    backgroundColor: COLORS.primary,
+    borderBottomRightRadius: 20,
+  },
+  rightHeader: {
+    width: "50%",
+    height: 70,
+    backgroundColor: "#ffffff",
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+  },
+  content: {
+    backgroundColor: "#ffffff",
+    width: "100%",
+    height: "100%",
+    flex: 1,
+    borderTopLeftRadius: 30,
+    overflow: "hidden",
+    paddingHorizontal: 28,
+  },
+});
 
 export default AuthLayoutPage;

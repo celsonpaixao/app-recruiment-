@@ -4,4 +4,5 @@ export const AppAssetsImages = {
     Shapa_text1: require("../../assets/images/shape texte 1.png"),
     google_vector: require("../../assets/images/google-symbol 1.png"),
     linkdin_vector: require("../../assets/images/linkedin.png"),
+    sucess_register: require("../../assets/images/freepik--Character--inject-69.png"),
 };

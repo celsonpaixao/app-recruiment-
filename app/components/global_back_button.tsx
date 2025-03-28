@@ -4,14 +4,16 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Typography from "./typography";
 import AppNavigation from "../hooks/app_navigation";
+
 const GlobalBackButton = ({ label }: { label?: string }) => {
   const navigator = AppNavigation();
+
   return (
     <TouchableOpacity onPress={navigator.goBack}>
-      <View className="flex items-center justify-center flex-row gap-2">
-        <MaterialIcons name="west" color="white" size={24} />
+      <View style={styles.container}>
+        <MaterialIcons name="keyboard-backspace" color="#ffffff" size={24} />
         {label && (
-          <Typography variant="h3-jakarta-regular" className="text-white">
+          <Typography variant="h3-plusjakartasans-medium" color="#ffffff">
             {label}
           </Typography>
         )}
@@ -19,5 +21,14 @@ const GlobalBackButton = ({ label }: { label?: string }) => {
     </TouchableOpacity>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+  },
+});
 
 export default GlobalBackButton;

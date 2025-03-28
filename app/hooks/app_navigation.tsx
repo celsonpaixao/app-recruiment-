@@ -1,4 +1,4 @@
-import { useNavigation, CommonActions } from "@react-navigation/native";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 import { AppRoutes } from "../resources/app_routes";
 
 const useAppNavigation = () => {
@@ -15,12 +15,15 @@ const useAppNavigation = () => {
 
   return {
     goToHome: () => resetNavigation(AppRoutes.HOME),
-    goToOnboarding: () => resetNavigation(AppRoutes.ONBOARDING),     
+    goToOnboarding: () => resetNavigation(AppRoutes.ONBOARDING),
     goToSettings: () => resetNavigation(AppRoutes.SETTINGS),
+    goToSucessRegister: () => resetNavigation(AppRoutes.SUCESS_REGISTER),
     goPasswordRecovery: () => navigation.navigate(AppRoutes.PASSWORD_RECOVERY),
     goResetPassword: () => navigation.navigate(AppRoutes.RESET_PASSWORD),
+    goResetInterpriseData: () =>
+      navigation.navigate(AppRoutes.INTERPRISE_DATA_REGISTER),
     goValidationCode: (email: string) =>
-      navigation.navigate(AppRoutes.VALIDATION_CODE, { email: email }),
+      navigation.navigate(AppRoutes.VALIDATION_CODE, { email }),
     goBack: () => navigation.goBack(),
   };
 };
