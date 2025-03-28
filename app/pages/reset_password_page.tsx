@@ -5,6 +5,8 @@ import Typography from "../components/typography";
 import GlobalInput from "../components/global_input";
 import GlobalButton from "../components/global_button";
 import { COLORS } from "../styles/color_style";
+import GlobalModal from "../components/global_modal";
+import GlobalSnackBar from "../components/global_snack_bar";
 
 const ResetPasswordPage = () => {
   return (

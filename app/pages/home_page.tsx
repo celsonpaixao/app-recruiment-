@@ -7,6 +7,7 @@ import HomeFeed from "../components/home_feed";
 import HomeGridDashBoard from "../components/home_dash_board";
 import HomeAppBar from "../components/home_app_bar";
 
+
 const HomePage = () => {
   return (
     <View style={styles.container}>

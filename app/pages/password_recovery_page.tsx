@@ -5,6 +5,7 @@ import Typography from "../components/typography";
 import GlobalInput from "../components/global_input";
 import GlobalButton from "../components/global_button";
 import PasswordRecoveryService from "../services/password_recovery_service";
+import GlobalSnackBar from "../components/global_snack_bar";
 
 const PasswordRecoveryPage = () => {
   const service = PasswordRecoveryService();
@@ -40,6 +41,7 @@ const PasswordRecoveryPage = () => {
           </Typography>
         </GlobalButton>
       </View>
+      <GlobalSnackBar />
     </AuthLayoutPage>
   );
 };

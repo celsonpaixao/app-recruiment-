@@ -1,5 +1,11 @@
 import React, { useRef, useState } from "react";
-import { View, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from "react-native";
 import PagerView from "react-native-pager-view";
 import LoginPage from "../pages/login_page";
 import RegisterPage from "../pages/register_page";
@@ -43,12 +49,25 @@ const AuthLayoutTab = () => {
         scrollEnabled={false}
         onPageSelected={(e) => setActiveTab(e.nativeEvent.position)}
       >
-        <View key="1">
-          <LoginPage />
-        </View>
-        <View key="2">
-          <RegisterPage />
-        </View>
+        <TouchableWithoutFeedback
+          key="1"
+          onPress={Keyboard.dismiss}
+          accessible={false}
+        >
+          <View style={{ flex: 1 }}>
+            <LoginPage />
+          </View>
+        </TouchableWithoutFeedback>
+
+        <TouchableWithoutFeedback
+          key="2"
+          onPress={Keyboard.dismiss}
+          accessible={false}
+        >
+          <View style={{ flex: 1 }}>
+            <RegisterPage />
+          </View>
+        </TouchableWithoutFeedback>
       </PagerView>
     </View>
   );
