@@ -10,9 +10,7 @@ Aqui está uma demonstração do funcionamento do aplicativo:
 
 ### Vídeo de Demonstração
 
-Para assistir ao vídeo de demonstração, faça o download ou visualize o arquivo na pasta `assets/`:
-
-[Gravação de ecrã de 2025-03-28 13-13-27.mp4](assets/Gravação%20de%20ecr%C3%A3%20de%202025-03-28%2013-13-27.mp4)
+![Demonstração do App](assets/Gravação%20de%20ecr%C3%A3%20de%202025-03-28%2013-13-27.gif)
 
 ---
 
