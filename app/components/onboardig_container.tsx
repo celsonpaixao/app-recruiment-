@@ -2,14 +2,12 @@ import React from "react";
 import {
   StyleSheet,
   View,
-  Text,
   Image,
   ImageSourcePropType,
   ImageBackground,
 } from "react-native";
-import GlobalButton from "./global_button";
-import { AppAssetsImages } from "../resources/app_assets_images";
 import Typography from "./typography";
+import { AppAssetsImages } from "../resources/app_assets_images";
 
 const OnboardingContainer = ({
   title1,
@@ -24,53 +22,97 @@ const OnboardingContainer = ({
   description: string;
   image: ImageSourcePropType;
   length: number;
-  currentIndex: number; 
+  currentIndex: number;
 }) => {
   return (
-    <View className="w-full h-screen flex-1 px-[30px] mt-[20vw] gap-2 relative">
-      <Typography
-        variant="h1-jakarta-regular"
-        className="text-black leading-none"
-      >
+    <View style={styles.container}>
+      <Typography variant="h1-plusjakartasans-medium" color="#000000">
         {title1}
       </Typography>
       <ImageBackground
         source={AppAssetsImages.Shapa_text1}
         resizeMode="stretch"
+        style={styles.imageBackground}
       >
         <Typography
-          variant="h1-jakarta-bold"
-          className="text-black leading-none"
+          variant="h1-plusjakartasans-semiBold"
+          color="#000000"
+          style={{ fontWeight: "bold", fontFamily: "Jakarta" }}
         >
           {title2}
         </Typography>
       </ImageBackground>
 
-      <Typography
-        variant="p-jakarta-regular"
-        className="text-gray_description leading-1"
-      >
+      <Typography variant="p-plusjakartasans-regular" color="#6b7280">
         {description}
       </Typography>
-      <View className="flex-row gap-2 mt-[10px]">
+
+      <View style={styles.dotContainer}>
         {Array.from({ length }).map((_, index) => (
           <View
             key={index}
-            className={`w-3 h-3 rounded-full ${
-              index === currentIndex
-                ? "bg-primary w-[30px]"
-                : "bg-primary opacity-[50%]"
-            }`}
+            style={[
+              styles.dot,
+              index === currentIndex ? styles.activeDot : styles.inactiveDot,
+            ]}
           />
         ))}
       </View>
-      <View className="absolute w-[30rem] h-[35rem] bg-primary rounded-[60px] -rotate-6 bottom-[100px] left-1/1 translate-x-[35px]"></View>
-      <Image
-        source={image}
-        className="absolute bottom-[3.5rem] left-1/1 translate-x-[35px] scale-[1.2]"
-      />
+
+      <View style={styles.backgroundShape} />
+      <Image source={image} style={styles.image} />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    width: "100%",
+    height: "100%",
+    flex: 1,
+    paddingHorizontal: 30,
+    marginTop: "20%",
+    gap: 8,
+    position: "relative",
+  },
+  imageBackground: {},
+  dotContainer: {
+    flexDirection: "row",
+    gap: 8,
+    marginTop: 10,
+
+    width: 60,
+  },
+  dot: {
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+    backgroundColor: "#0B89CE",
+  },
+  activeDot: {
+    width: 30,
+    opacity: 1,
+  },
+  inactiveDot: {
+    opacity: 0.4,
+  },
+  backgroundShape: {
+    position: "absolute",
+    width: 420,
+    height: 420,
+    backgroundColor: "#0B89CE",
+    borderRadius: 60,
+    transform: [{ rotate: "-8deg" }],
+    bottom: 90,
+    left: 20,
+  },
+  image: {
+    position: "absolute",
+    bottom: 50,
+    left: 0,
+    right: 0,
+    transform: [{ translateX: 35 }, { scale: 1.2 }],
+  },
+});
 
 export default OnboardingContainer;

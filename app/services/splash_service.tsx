@@ -1,14 +1,27 @@
-import React from "react";
-import UserNavigation from "../hooks/app_navigation";
+import React, { useEffect, useState } from "react";
+import { User } from "firebase/auth";
+import useAppNavigation from "../hooks/app_navigation";
+import AuthRepository from "../repository/auth_repository";
+
 const SplashService = () => {
-  const navigator = UserNavigation();
-  return {
-    fristNavigation: () => {
-      setTimeout(() => {
-        navigator.goToOnboarding();
-      }, 2000);
-    },
-  };
+  const { goToOnboarding, goToHome } = useAppNavigation();
+  const [user, setUser] = useState<User | null>(null);
+  const { checkUserSession } = AuthRepository();
+
+  useEffect(() => {
+    const unsubscribe = checkUserSession((_user) => {
+      setUser(_user);
+      if (_user) {
+        goToHome();
+      } else {
+        goToOnboarding();
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  return null;
 };
 
 export default SplashService;

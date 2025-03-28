@@ -1,5 +1,11 @@
 import React, { useRef, useState } from "react";
-import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from "react-native";
 import PagerView from "react-native-pager-view";
 import LoginPage from "../pages/login_page";
 import RegisterPage from "../pages/register_page";
@@ -15,25 +21,20 @@ const AuthLayoutTab = () => {
   };
 
   return (
-    <View className="flex-1 bg-primary">
-      <View
-        className={`flex-row justify-between h-[60px] transition-all duration-300`}
-      >
+    <View style={styles.container}>
+      <View style={styles.tabContainer}>
         {["Iniciar sessão", "Criar conta"].map((label, index) => (
           <TouchableOpacity
             key={index}
             onPress={() => handleTabPress(index)}
-            className={`w-[50%] flex items-center justify-center transition-all duration-300 ${
-              activeTab === index
-                ? "bg-white rounded-t-[30px] rounded-b-[0]"
-                : "bg-primary text-white rounded-t-[0] rounded-b-[30px]"
-            }`}
+            style={[
+              styles.tab,
+              activeTab === index ? styles.activeTab : styles.inactiveTab,
+            ]}
           >
             <Typography
-              variant="h3-jakarta-medium"
-              className={`font-bold transition-all duration-300 ${
-                activeTab === index ? "text-primary" : "text-white"
-              }`}
+              variant="h3-plusjakartasans-medium"
+              color={activeTab === index ? "#0B89CE" : "#ffffff"}
             >
               {label}
             </Typography>
@@ -48,20 +49,62 @@ const AuthLayoutTab = () => {
         scrollEnabled={false}
         onPageSelected={(e) => setActiveTab(e.nativeEvent.position)}
       >
-        <View key="1">
-          <LoginPage />
-        </View>
-        <View key="2">
-          <RegisterPage />
-        </View>
+        <TouchableWithoutFeedback
+          key="1"
+          onPress={Keyboard.dismiss}
+          accessible={false}
+        >
+          <View style={{ flex: 1 }}>
+            <LoginPage />
+          </View>
+        </TouchableWithoutFeedback>
+
+        <TouchableWithoutFeedback
+          key="2"
+          onPress={Keyboard.dismiss}
+          accessible={false}
+        >
+          <View style={{ flex: 1 }}>
+            <RegisterPage />
+          </View>
+        </TouchableWithoutFeedback>
       </PagerView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#0B89CE",
+  },
+  tabContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    height: 60,
+  },
+  tab: {
+    width: "50%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  activeTab: {
+    backgroundColor: "#ffffff",
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+  },
+  inactiveTab: {
+    backgroundColor: "#0B89CE",
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
+  },
   pagerView: {
     flex: 1,
+    backgroundColor: "#fff",
   },
 });
 

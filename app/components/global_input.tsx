@@ -1,14 +1,30 @@
 import React, { forwardRef, useState } from "react";
-import { TextInput, View, Text, TextInputProps } from "react-native";
+import {
+  TextInput,
+  View,
+  Text,
+  StyleSheet,
+  TextInputProps,
+  StyleProp,
+  ViewStyle,
+} from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import Typography from "./typography";
+import { FONT_FAMILY } from "../resources/app_fonts";
+import { COLORS } from "../styles/color_style";
+
+type WidthProp = number | `${number}%` | "auto";
+type IconName = keyof typeof MaterialIcons.glyphMap;
 
 interface GlobalInputProps extends TextInputProps {
   label?: string;
-  iconLeft?: keyof typeof MaterialIcons.glyphMap;
-  iconRight?: keyof typeof MaterialIcons.glyphMap;
+  iconLeft?: IconName;
+  iconRight?: IconName;
   error?: string;
-  containerWidth?: string | number; // Permite definir a largura do container
+  containerWidth?: WidthProp;
+  containerStyle?: StyleProp<ViewStyle>;
+  inputStyle?: StyleProp<ViewStyle>;
+  showCharacterCount?: boolean;
 }
 
 const GlobalInput = forwardRef<TextInput, GlobalInputProps>(
@@ -25,67 +41,168 @@ const GlobalInput = forwardRef<TextInput, GlobalInputProps>(
       keyboardType = "default",
       maxLength,
       textAlign = "left",
-      containerWidth = "w-full",
-      className,
+      containerWidth = "100%",
+      containerStyle,
+      inputStyle,
+      showCharacterCount = false,
       ...props
     },
     ref
   ) => {
     const [isFocused, setIsFocused] = useState(false);
+    const [isSecureText, setIsSecureText] = useState(secureTextEntry);
+
+    const toggleSecureText = () => setIsSecureText(!isSecureText);
+
+    const containerStyles = [
+      styles.container,
+      { width: containerWidth },
+      containerStyle,
+    ];
+
+    const inputContainerStyles = [
+      styles.inputContainer,
+      error
+        ? styles.errorBorder
+        : isFocused
+        ? styles.focusedBorder
+        : styles.defaultBorder,
+    ];
+
+    const characterCount =
+      maxLength && value ? `${value.length}/${maxLength}` : null;
 
     return (
-      <View className={`${containerWidth}`}>
+      <View style={containerStyles}>
         {label && (
-          <Typography
-            variant="h3-jakarta-medium"
-            className="text-gray-800 text-base mb-1"
-          >
+          <Typography variant="p-plusjakartasans-regular" style={styles.label}>
             {label}
           </Typography>
         )}
 
-        <View
-          className={`
-            flex-row items-center rounded-[14px] bg-white px-3 py-2 
-            ${
-              error
-                ? "border border-red-500"
-                : isFocused
-                ? "border border-blue-500"
-                : "border border-gray-300"
-            }
-            ${className}
-          `}
-        >
+        <View style={inputContainerStyles}>
           {iconLeft && (
-            <MaterialIcons name={iconLeft} size={24} color="#9CA4AB" />
+            <MaterialIcons
+              name={iconLeft}
+              size={24}
+              color={isFocused ? COLORS.primary : COLORS.gray[500]}
+              style={styles.icon}
+            />
           )}
 
           <TextInput
             ref={ref}
-            className="flex-1 ml-2 text-gray-800 text-[16px] font-jakarta-medium "
+            style={[
+              styles.textInput,
+              inputStyle,
+              { textAlign },
+              !iconLeft && { marginLeft: 0 },
+              !iconRight && { marginRight: 0 },
+            ]}
             placeholder={placeholder}
-            placeholderTextColor="#9CA4AB"
+            placeholderTextColor={COLORS.gray[600]}
             value={value}
             onChangeText={onChangeText}
-            secureTextEntry={secureTextEntry}
+            secureTextEntry={isSecureText}
             keyboardType={keyboardType}
             maxLength={maxLength}
-            textAlign={textAlign}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
+            selectionColor={COLORS.primary}
             {...props}
           />
 
-          {iconRight && (
-            <MaterialIcons name={iconRight} size={24} color="#9CA4AB" />
-          )}
+          {secureTextEntry ? (
+            <MaterialIcons
+              name={isSecureText ? "visibility-off" : "visibility"}
+              size={20}
+              color={COLORS.gray[400]}
+              onPress={toggleSecureText}
+              style={styles.icon}
+            />
+          ) : iconRight ? (
+            <MaterialIcons
+              name={iconRight}
+              size={24}
+              color={isFocused ? COLORS.primary : COLORS.gray[500]}
+              style={styles.icon}
+            />
+          ) : null}
         </View>
 
-        {error && <Text className="text-red-500 text-sm mt-1">{error}</Text>}
+        <View style={styles.footer}>
+          {error && (
+            <Typography
+              variant="caption-plusjakartasans-light"
+              style={styles.errorText}
+            >
+              {error}
+            </Typography>
+          )}
+          {showCharacterCount && characterCount && (
+            <Typography
+              variant="caption-plusjakartasans-light"
+              style={styles.characterCount}
+            >
+              {characterCount}
+            </Typography>
+          )}
+        </View>
       </View>
     );
   }
 );
+
+const styles = StyleSheet.create({
+  container: {},
+  label: {
+    color: COLORS.gray[900],
+    marginBottom: 8,
+  },
+  inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 12,
+    backgroundColor: COLORS.backgroundLight,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    borderWidth: 1,
+    height: 65,
+  },
+
+  defaultBorder: {
+    borderColor: COLORS.gray[300],
+  },
+  focusedBorder: {
+    borderColor: COLORS.primary,
+  },
+  errorBorder: {
+    borderColor: COLORS.error,
+  },
+  textInput: {
+    flex: 1,
+    marginHorizontal: 12,
+    color: COLORS.gray[900],
+    fontSize: 16,
+    fontFamily: "PlusJakartaSans-Regular",
+  
+  },
+  icon: {
+    marginHorizontal: 4,
+  },
+  footer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 4,
+  },
+  errorText: {
+    color: COLORS.error,
+    flex: 1,
+  },
+  characterCount: {
+    color: COLORS.gray[500],
+    textAlign: "right",
+  },
+});
 
 export default GlobalInput;

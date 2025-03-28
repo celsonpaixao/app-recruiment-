@@ -1,26 +1,43 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Typography from "../components/typography";
-import { StatusBar } from "expo-status-bar";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-
-import RegisterPage from "./register_page";
-import LoginPage from "./login_page";
-import { AppRoutes } from "../resources/app_routes";
-import { NavigationContainer } from "@react-navigation/native";
 import AuthLayoutTab from "../layouts/auth_layout";
 
 const AuthPage = () => {
   return (
-    <View className="bg-primary w-full h-screen flex-1 items-center justify-center">
-      <Typography variant="h1-jakarta-medium" className="m-[40px] text-white">
+    <View style={styles.container}>
+      <Typography
+        variant="h1-plusjakartasans-medium"
+        color="#ffffff"
+        style={styles.title}
+      >
         Olá bem-vindo(a)!
       </Typography>
-      <View className="flex-1 w-full overflow-hidden bg-yellow-50 ">
+      <View style={styles.content}>
         <AuthLayoutTab />
       </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "#0B89CE",
+    width: "100%",
+    height: "100%",
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  title: {
+    margin: 40,
+  },
+  content: {
+    flex: 1,
+    width: "100%",
+    overflow: "hidden",
+    backgroundColor: "#fff",
+  },
+});
 
 export default AuthPage;

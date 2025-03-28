@@ -8,6 +8,8 @@ export const AppRoutes = {
     ONBOARDING: 'Onboarding',
     AUTH: 'Auth',
     PASSWORD_RECOVERY: 'Password_recovery',
-    VALIDATION_CODE: `Password_recovery/Validation_Code`,
-    RESET_PASSWORD: `Password_recovery/Validation_Code/Reset_Password`,
-} as const;
+    VALIDATION_CODE: 'Validation_Code',
+    RESET_PASSWORD: 'Reset_Password',
+    SUCESS_REGISTER: 'Sucess_Register',
+    INTERPRISE_DATA_REGISTER: 'Interprise_Register',
+};

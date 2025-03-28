@@ -1,21 +1,23 @@
 import React, { useState } from "react";
-import { View, Image, StatusBar } from "react-native";
+import { View, Image, StatusBar, StyleSheet } from "react-native";
 import GlobalInput from "../components/global_input";
 import Typography from "../components/typography";
 import GlobalButton from "../components/global_button";
 import GlobalDivider from "../components/global_divider";
-import App from "../App";
 import { AppAssetsImages } from "../resources/app_assets_images";
 import LoginService from "../services/login_service";
+import { COLORS } from "../styles/color_style";
+import GlobalSnackBar from "../components/global_snack_bar";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const service = LoginService();
+  const { navigateToRecoveryPass, onLogin } = LoginService();
 
   return (
-    <View className="bg-white flex gap-8 pt-8 px-7 w-full h-screen flex-col items-end justify-start ">
+    <View style={styles.container}>
       <StatusBar translucent backgroundColor="transparent" />
+
       <GlobalInput
         label="Email"
         placeholder="Inserir email"
@@ -23,6 +25,7 @@ const LoginPage = () => {
         value={email}
         onChangeText={setEmail}
       />
+
       <GlobalInput
         label="Senha"
         placeholder="Inserir senha"
@@ -31,55 +34,116 @@ const LoginPage = () => {
         value={password}
         onChangeText={setPassword}
       />
+
       <Typography
-        onPress={service.navigateToRecoveryPass}
-        variant="h2-jakarta-bold"
-        className="text-primary mt-1"
+        onPress={navigateToRecoveryPass}
+        variant="h3-plusjakartasans-semiBold"
+        style={styles.forgotPassword}
       >
         Esqueceu a senha?
       </Typography>
-      <GlobalButton className="w-full rounded-[10px] mt-2">
-        <Typography variant="h2-jakarta-bold" className="text-white my-1 ">
+
+      <GlobalButton
+        onPress={() => onLogin(email, password)}
+        style={{
+          width: "100%",
+          marginBottom: 30,
+        }}
+      >
+        <Typography
+          variant="h2-plusjakartasans-medium"
+          style={{ color: COLORS.backgroundLight }}
+        >
           Continuar
         </Typography>
       </GlobalButton>
-      <GlobalDivider text="Ou" className="mt-[20px]" />
-      <View className="w-full flex-row items-center justify-between ">
-        <GlobalButton
-          variant="outline"
-          className="w-[170px] rounded-[10px] gap-2 "
-        >
+
+      <GlobalDivider text="Ou entrar com" />
+
+      <View style={styles.socialButtonsContainer}>
+        <GlobalButton variant="outline" style={styles.socialButtonText}>
           <Image
             source={AppAssetsImages.google_vector}
-            className="w-[24px] h-[24px]"
+            style={styles.socialIcon}
           />
-          <Typography variant="h3-jakarta-regular" className="text-gray-900 ">
+          <Typography variant="button-plusjakartasans-semiBold">
             Google
           </Typography>
         </GlobalButton>
-        <GlobalButton
-          variant="outline"
-          className="w-[170px] rounded-[10px] gap-2 "
-        >
+
+        <GlobalButton variant="outline" style={styles.socialButtonText}>
           <Image
             source={AppAssetsImages.linkdin_vector}
-            className="w-[24px] h-[24px]"
+            style={styles.socialIcon}
           />
-          <Typography variant="h3-jakarta-regular" className="text-gray-900">
+          <Typography variant="button-plusjakartasans-semiBold">
             Linkedin
           </Typography>
         </GlobalButton>
       </View>
-      <View className="w-full flex-row items-center justify-center mt-4 gap-1">
-        <Typography variant="h2-jakarta-medium" className="text-gray-900">
+
+      <View style={styles.footer}>
+        <Typography variant="h3-plusjakartasans-medium" style={{}}>
           Não tem uma conta?
         </Typography>
-        <Typography variant="h2-jakarta-medium" className="text-primary">
+        <Typography
+          variant="h3-plusjakartasans-medium"
+          style={{ color: COLORS.primary }}
+        >
           Criar conta
         </Typography>
       </View>
+
+      <GlobalSnackBar />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "#fff",
+    gap: 16,
+    paddingTop: 16,
+    paddingHorizontal: 28,
+    width: "100%",
+    height: "100%",
+    flexDirection: "column",
+    alignItems: "flex-end",
+    justifyContent: "flex-start",
+  },
+  forgotPassword: {
+    color: "#0B89CE",
+    marginBottom: 4,
+  },
+
+  socialButtonsContainer: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 10,
+    marginTop: 10,
+  },
+  socialButton: {
+    width: 170,
+    borderRadius: 10,
+    gap: 8,
+  },
+  socialIcon: {
+    width: 24,
+    height: 24,
+  },
+  socialButtonText: {
+    width: "48%",
+  },
+  footer: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 16,
+    gap: 4,
+  },
+});
 
 export default LoginPage;

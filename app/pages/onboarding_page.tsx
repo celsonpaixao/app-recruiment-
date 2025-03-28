@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { View, StatusBar, Text } from "react-native";
+import { View, StatusBar, StyleSheet } from "react-native";
 import Swiper from "react-native-swiper";
 import { AppAssetsImages } from "../resources/app_assets_images";
 import GlobalButton from "../components/global_button";
@@ -7,6 +7,7 @@ import { AntDesign } from "@expo/vector-icons";
 import OnboardingContainer from "../components/onboardig_container";
 import { AppRoutes } from "../resources/app_routes";
 import Typography from "../components/typography";
+import useAppNavigation from "../hooks/app_navigation";
 
 const onboardingData = [
   {
@@ -28,18 +29,19 @@ const onboardingData = [
 const OnboardingPage = ({ navigation }: any) => {
   const swiperRef = useRef<Swiper>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { goToAuth } = useAppNavigation();
 
   const handleNext = () => {
     if (currentIndex < onboardingData.length - 1) {
       setCurrentIndex((prev) => prev + 1);
       swiperRef.current?.scrollBy(1);
     } else {
-      navigation.replace(AppRoutes.AUTH);
+      goToAuth();
     }
   };
 
   return (
-    <View className="w-full h-screen flex-1">
+    <View style={styles.container}>
       <StatusBar
         translucent
         backgroundColor="transparent"
@@ -52,7 +54,7 @@ const OnboardingPage = ({ navigation }: any) => {
         activeDotColor="#000"
         scrollEnabled={false}
         showsPagination={false}
-        paginationStyle={{ bottom: 50 }}
+        paginationStyle={styles.pagination}
       >
         {onboardingData.map((item, index) => (
           <OnboardingContainer
@@ -70,20 +72,48 @@ const OnboardingPage = ({ navigation }: any) => {
       <GlobalButton
         variant="primary"
         onPress={handleNext}
-        className="absolute bottom-10 left-[25vw] right-[25vw] gap-2 rounded-[30px]"
+        style={styles.button}
       >
         <Typography
-          variant="h3-jakarta-medium"
-          className="leading-none text-white  text-[18px]"
+          variant="h3-plusjakartasans-medium"
+          color="#ffffff"
+          style={{ lineHeight: 20 }}
         >
-          {" "}
           Continuar
         </Typography>
-
-        <AntDesign name="arrowright" size={20} color="white" />
+        <AntDesign
+          name="arrowright"
+          size={20}
+          color="#ffffff"
+          style={{ margin: 0, padding: 0 }}
+        />
       </GlobalButton>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    width: "100%",
+    height: "100%",
+    flex: 1,
+    position: "relative",
+  },
+  pagination: {
+    bottom: 50,
+  },
+  button: {
+    position: "absolute",
+    bottom: 40,
+    left: "25%",
+    right: "25%",
+    borderRadius: 30,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+  },
+});
 
 export default OnboardingPage;
