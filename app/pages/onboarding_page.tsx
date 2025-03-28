@@ -7,6 +7,7 @@ import { AntDesign } from "@expo/vector-icons";
 import OnboardingContainer from "../components/onboardig_container";
 import { AppRoutes } from "../resources/app_routes";
 import Typography from "../components/typography";
+import useAppNavigation from "../hooks/app_navigation";
 
 const onboardingData = [
   {
@@ -28,13 +29,14 @@ const onboardingData = [
 const OnboardingPage = ({ navigation }: any) => {
   const swiperRef = useRef<Swiper>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { goToAuth } = useAppNavigation();
 
   const handleNext = () => {
     if (currentIndex < onboardingData.length - 1) {
       setCurrentIndex((prev) => prev + 1);
       swiperRef.current?.scrollBy(1);
     } else {
-      navigation.replace(AppRoutes.AUTH);
+      goToAuth();
     }
   };
 

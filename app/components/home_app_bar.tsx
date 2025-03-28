@@ -1,32 +1,53 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import Typography from "../components/typography";
 import GlobalIcons from "../components/global_Icons";
 import { COLORS } from "../styles/color_style";
+import HomeService from "../services/home-service";
 
-const HomeAppBar = () => (
-  <View style={styles.appBar}>
-    <View style={styles.appBarLeft}>
-      <View style={styles.userIcon} />
-      <View>
-        <Typography variant="p-plusjakartasans-bold" style={styles.appBarText}>
-          Mirantes Tecnologies
-        </Typography>
-        <Typography
-          variant="button-plusjakartasans-regular"
-          style={styles.appBarText}
-        >
-          Mirantes Tecnologies
-        </Typography>
+const HomeAppBar = () => {
+  const { userLogout } = HomeService();
+
+  const handleLogout = async () => {
+    try {
+      await userLogout();
+    } catch (error) {
+      console.error("Erro ao tentar deslogar", error);
+    }
+  };
+
+  return (
+    <View style={styles.appBar}>
+      <TouchableOpacity onPress={handleLogout}>
+        <View style={styles.appBarLeft}>
+          <View style={styles.userIcon} />
+          <View>
+            <Typography
+              variant="p-plusjakartasans-bold"
+              style={styles.appBarText}
+            >
+              Mirantes Tecnologies
+            </Typography>
+            <Typography
+              variant="button-plusjakartasans-regular"
+              style={styles.appBarText}
+            >
+              Mirantes Tecnologies
+            </Typography>
+          </View>
+        </View>
+      </TouchableOpacity>
+
+      <View style={styles.appBarRight}>
+        <GlobalIcons
+          name="notifications"
+          size={24}
+          color={COLORS.backgroundLight}
+        />
       </View>
     </View>
-    <GlobalIcons
-      name="notifications"
-      size={24}
-      color={COLORS.backgroundLight}
-    />
-  </View>
-);
+  );
+};
 
 const styles = StyleSheet.create({
   appBar: {
@@ -49,6 +70,11 @@ const styles = StyleSheet.create({
   },
   appBarText: {
     color: COLORS.backgroundLight,
+  },
+  appBarRight: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
   },
 });
 

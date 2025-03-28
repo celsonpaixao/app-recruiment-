@@ -17,6 +17,7 @@ const useAppNavigation = () => {
     goToHome: () => resetNavigation(AppRoutes.HOME),
     goToOnboarding: () => resetNavigation(AppRoutes.ONBOARDING),
     goToSettings: () => resetNavigation(AppRoutes.SETTINGS),
+    goToAuth: () => resetNavigation(AppRoutes.AUTH),
     goToSucessRegister: () => resetNavigation(AppRoutes.SUCESS_REGISTER),
     goPasswordRecovery: () => navigation.navigate(AppRoutes.PASSWORD_RECOVERY),
     goResetPassword: () => navigation.navigate(AppRoutes.RESET_PASSWORD),
