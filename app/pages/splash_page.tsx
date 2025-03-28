@@ -2,13 +2,11 @@ import { StatusBar } from "expo-status-bar";
 import React, { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import Typography from "../components/typography";
-import useAppNavigation from "../hooks/app_navigation";
+import SplashService from "../services/splash_service";
 
 const SplashPage = () => {
-  const { goToOnboarding, goToHome } = useAppNavigation();
-
-  useEffect(() => {}, [goToOnboarding()]);
-
+  SplashService();
+  
   return (
     <View style={styles.container}>
       <StatusBar translucent backgroundColor="transparent" style="light" />

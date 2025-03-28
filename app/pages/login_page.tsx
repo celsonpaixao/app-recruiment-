@@ -7,6 +7,7 @@ import GlobalDivider from "../components/global_divider";
 import { AppAssetsImages } from "../resources/app_assets_images";
 import LoginService from "../services/login_service";
 import { COLORS } from "../styles/color_style";
+import GlobalSnackBar from "../components/global_snack_bar";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -43,7 +44,7 @@ const LoginPage = () => {
       </Typography>
 
       <GlobalButton
-        onPress={onLogin}
+        onPress={() => onLogin(email, password)}
         style={{
           width: "100%",
           marginBottom: 30,
@@ -92,6 +93,8 @@ const LoginPage = () => {
           Criar conta
         </Typography>
       </View>
+
+      <GlobalSnackBar />
     </View>
   );
 };
